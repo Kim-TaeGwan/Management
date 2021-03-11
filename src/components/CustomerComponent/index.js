@@ -1,5 +1,5 @@
-import { TableCell, TableRow } from "@material-ui/core";
 import React from "react";
+import { TableCell, TableRow } from "@material-ui/core";
 
 const CustomerComponent = ({ id, image, name, birthday, gender, job }) => {
   return (
