@@ -5,21 +5,19 @@ class Customer extends Component {
   render() {
     const { id, image, name, birthday, gender, job } = this.props;
     return (
-      <div>
-        <TableRow>
-          <TableCell>{id}</TableCell>
-          <TableCell>
-            <img src={image} alt="userImage" />
-          </TableCell>
-          <TableCell>{name}</TableCell>
+      <TableRow>
+        <TableCell>{id}</TableCell>
+        <TableCell>
+          <img src={image} alt="userImage" />
+        </TableCell>
+        <TableCell>{name}</TableCell>
 
-          <TableCell>{birthday}</TableCell>
+        <TableCell>{birthday}</TableCell>
 
-          <TableCell>{gender}</TableCell>
+        <TableCell>{gender}</TableCell>
 
-          <TableCell>{job}</TableCell>
-        </TableRow>
-      </div>
+        <TableCell>{job}</TableCell>
+      </TableRow>
     );
   }
 }
