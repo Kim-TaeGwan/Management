@@ -14,7 +14,7 @@ import Customer from "./components/Customer";
 const styles = theme => ({
   root: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
+    // marginTop: theme.spacing.unit * 3,
     overflowX: "auto",
   },
   table: {
@@ -40,6 +40,7 @@ class App extends Component {
   };
   render() {
     const { classes } = this.props;
+    console.log(this.state.customers);
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
