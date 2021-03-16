@@ -8,7 +8,7 @@ import {
   TableRow,
   withStyles,
 } from "@material-ui/core";
-import Customer from "./components/Customer";
+import Customer from "./components/CustomerComponent";
 
 const styles = theme => ({
   root: {
@@ -21,15 +21,15 @@ const styles = theme => ({
   },
 });
 
-const App = ({ classes }) => {
-  const { customers, setCustomers } = useState("");
+const AppFunction = ({ classes }) => {
+  const [customers, setCustomers] = useState([]);
   useEffect(() => {
     callApi()
       .then(res => {
-        setCustomers(res);
+        setCustomers({ customers: res });
       })
       .catch(err => console.log(err));
-  }, [setCustomers]);
+  }, []);
 
   const callApi = async () => {
     const response = await fetch("/api/customers"); // 접속하고자 하는 api의 주소
@@ -51,25 +51,24 @@ const App = ({ classes }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {customers
-            ? customers.map(customer => {
-                return (
-                  <Customer
-                    key={customer.id}
-                    id={customer.id}
-                    image={customer.image}
-                    name={customer.name}
-                    birthday={customer.birthday}
-                    gender={customer.gender}
-                    job={customer.job}
-                  />
-                );
-              })
-            : "불러오는중"}
+          {/* {Object.keys(customers).map(key => (
+            <Customer key={key} customers={customers[key]} />
+          ))} */}
+          {Object.keys(customers).map(key => (
+            <Customer
+              key={key}
+              id={customers[key].id}
+              image={customers[key].image}
+              name={customers[key].name}
+              birthday={customers[key].birthday}
+              gender={customers[key].gender}
+              job={customers[key].job}
+            />
+          ))}
         </TableBody>
       </Table>
     </Paper>
   );
 };
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(AppFunction);

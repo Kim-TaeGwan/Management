@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import {
   Paper,
   Table,
@@ -42,37 +41,39 @@ class App extends Component {
     const { classes } = this.props;
     console.log(this.state.customers);
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>번호</TableCell>
-              <TableCell>이미지</TableCell>
-              <TableCell>이름</TableCell>
-              <TableCell>생년월일</TableCell>
-              <TableCell>성별</TableCell>
-              <TableCell>직업</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.state.customers
-              ? this.state.customers.map(customer => {
-                  return (
-                    <Customer
-                      key={customer.id}
-                      id={customer.id}
-                      image={customer.image}
-                      name={customer.name}
-                      birthday={customer.birthday}
-                      gender={customer.gender}
-                      job={customer.job}
-                    />
-                  );
-                })
-              : "불러오는중"}
-          </TableBody>
-        </Table>
-      </Paper>
+      <>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>번호</TableCell>
+                <TableCell>이미지</TableCell>
+                <TableCell>이름</TableCell>
+                <TableCell>생년월일</TableCell>
+                <TableCell>성별</TableCell>
+                <TableCell>직업</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.customers
+                ? this.state.customers.map(customer => {
+                    return (
+                      <Customer
+                        key={customer.id}
+                        id={customer.id}
+                        image={customer.image}
+                        name={customer.name}
+                        birthday={customer.birthday}
+                        gender={customer.gender}
+                        job={customer.job}
+                      />
+                    );
+                  })
+                : "불러오는중"}
+            </TableBody>
+          </Table>
+        </Paper>
+      </>
     );
   }
 }
