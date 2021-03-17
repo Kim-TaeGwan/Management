@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -19,14 +20,32 @@ const styles = theme => ({
   table: {
     minWidth: 1080,
   },
+  progress: {
+    margin: "0 auto",
+  },
 });
+
+/*
+
+  리액트 라이프사이클(생명주기)
+  1) constructor()
+  2) componentWillMount()
+  3) render()
+  4) componentDidMount()
+
+ */
+/*
+  props or state => shouldComponentUpdate()
+*/
 
 class App extends Component {
   state = {
     customers: "",
+    completed: 0,
   };
   componentDidMount() {
     // 모든 컴포넌트가 마운트 되었을떄 실행
+    this.timer = setInterval(this.progress, 20);
     this.callApi()
       .then(res => this.setState({ customers: res }))
       // callApi의 데이터가 담긴 body를 res에 담는다
@@ -37,9 +56,13 @@ class App extends Component {
     const body = await response.json(); // json형식으로 출력
     return body;
   };
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+  };
   render() {
     const { classes } = this.props;
-    console.log(this.state.customers);
+    // console.log(this.state.customers);
     return (
       <>
         <Paper className={classes.root}>
@@ -55,21 +78,31 @@ class App extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.state.customers
-                ? this.state.customers.map(customer => {
-                    return (
-                      <Customer
-                        key={customer.id}
-                        id={customer.id}
-                        image={customer.image}
-                        name={customer.name}
-                        birthday={customer.birthday}
-                        gender={customer.gender}
-                        job={customer.job}
-                      />
-                    );
-                  })
-                : "불러오는중"}
+              {this.state.customers ? (
+                this.state.customers.map(customer => {
+                  return (
+                    <Customer
+                      key={customer.id}
+                      id={customer.id}
+                      image={customer.image}
+                      name={customer.name}
+                      birthday={customer.birthday}
+                      gender={customer.gender}
+                      job={customer.job}
+                    />
+                  );
+                })
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="6" align="center">
+                    <CircularProgress
+                      className={classes.progress}
+                      variant="determinate"
+                      value={this.state.completed}
+                    />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </Paper>
