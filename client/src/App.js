@@ -10,6 +10,7 @@ import {
   withStyles,
 } from "@material-ui/core";
 import Customer from "./components/Customer";
+import CustomerAddComponent from "./components/CustomerAddComponent";
 
 const styles = theme => ({
   root: {
@@ -39,10 +40,25 @@ const styles = theme => ({
 */
 
 class App extends Component {
-  state = {
-    customers: "",
-    completed: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      customers: "",
+      completed: 0,
+    };
+  }
+
+  stateRefresh = () => {
+    this.setState({
+      customers: "",
+      completed: 0,
+    })
+    this.callApi()
+        .then(res => this.setState({ customers: res }))
+        // callApi의 데이터가 담긴 body를 res에 담는다
+        .catch(err => console.log(err));
+  }
+
   componentDidMount() {
     // 모든 컴포넌트가 마운트 되었을떄 실행
     this.timer = setInterval(this.progress, 20);
@@ -64,7 +80,7 @@ class App extends Component {
     const { classes } = this.props;
     // console.log(this.state.customers);
     return (
-      <>
+      <div>
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
@@ -106,7 +122,8 @@ class App extends Component {
             </TableBody>
           </Table>
         </Paper>
-      </>
+        <CustomerAddComponent stateRefresh={this.stateRefresh} />
+      </div>
     );
   }
 }
